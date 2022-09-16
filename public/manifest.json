@@ -1,0 +1,21 @@
+{
+    "name": "TakeMeThere",
+    "short_name": "TakeMeThere",
+    "icons": [
+      {
+        "src": "/logo/png/tmd_logo.png",
+        "sizes": "444x444",
+        "type": "image/png"
+    },
+      {
+        "src": "/logo/png/tmd_logo_no_text.png",
+        "sizes": "444x444",
+        "type": "image/png"
+    }
+    ],
+    "theme_color": "#FFFFFF",
+    "background_color": "#FFFFFF",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait"
+  }
