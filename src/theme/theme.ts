@@ -39,6 +39,16 @@ const theme = createTheme({
       light: Colors.yellow2,
     },
   },
+  typography: {
+    h1: {
+      fontFamily: 'Atma',
+      fontWeight: 500,
+    },
+    h4: {
+      fontFamily: 'Atma',
+      fontWeight: 500,
+    },
+  },
   components: {
     MuiButtonBase: {
       defaultProps: {
@@ -81,6 +91,9 @@ const theme = createTheme({
         },
         text: {
           borderRadius: 0,
+          fontFamily: 'Atma',
+          fontWeight: 600,
+
           '&:hover': {
             border: 'none',
             backgroundColor: 'inherit',
