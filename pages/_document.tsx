@@ -15,7 +15,6 @@ export default class MyDocument extends Document {
             href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'
           />
           <meta name='emotion-insertion-point' content='' />
-
           {/* PWA configs */}
           <link rel='manifest' href='/manifest.json' />
           <link
@@ -25,6 +24,132 @@ export default class MyDocument extends Document {
           />
           <meta name='theme-color' content='#fff' />
 
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
+              /* bengali */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 300;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo8JzGiI3P9WeVkIJXA.woff2) format('woff2');
+                unicode-range: U+0964-0965, U+0981-09FB, U+200C-200D, U+20B9, U+25CC;
+              }
+              /* latin-ext */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 300;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo8JzGj43P9WeVkIJXA.woff2) format('woff2');
+                unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+              }
+              /* latin */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 300;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo8JzGjA3P9WeVkI.woff2) format('woff2');
+                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+              }
+              /* bengali */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 400;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_84rqWc-Eoq3tRDx0VMv-kXw.woff2) format('woff2');
+                unicode-range: U+0964-0965, U+0981-09FB, U+200C-200D, U+20B9, U+25CC;
+              }
+              /* latin-ext */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 400;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_84rqWc-Eoq2dRDx0VMv-kXw.woff2) format('woff2');
+                unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+              }
+              /* latin */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 400;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_84rqWc-Eoq2lRDx0VMv8.woff2) format('woff2');
+                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+              }
+              /* bengali */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 500;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo5pyGiI3P9WeVkIJXA.woff2) format('woff2');
+                unicode-range: U+0964-0965, U+0981-09FB, U+200C-200D, U+20B9, U+25CC;
+              }
+              /* latin-ext */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 500;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo5pyGj43P9WeVkIJXA.woff2) format('woff2');
+                unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+              }
+              /* latin */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 500;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo5pyGjA3P9WeVkI.woff2) format('woff2');
+                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+              }
+              /* bengali */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 600;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo7Z1GiI3P9WeVkIJXA.woff2) format('woff2');
+                unicode-range: U+0964-0965, U+0981-09FB, U+200C-200D, U+20B9, U+25CC;
+              }
+              /* latin-ext */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 600;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo7Z1Gj43P9WeVkIJXA.woff2) format('woff2');
+                unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+              }
+              /* latin */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 600;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo7Z1GjA3P9WeVkI.woff2) format('woff2');
+                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+              }
+              /* bengali */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 700;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo9J0GiI3P9WeVkIJXA.woff2) format('woff2');
+                unicode-range: U+0964-0965, U+0981-09FB, U+200C-200D, U+20B9, U+25CC;
+              }
+              /* latin-ext */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 700;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo9J0Gj43P9WeVkIJXA.woff2) format('woff2');
+                unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+              }
+              /* latin */
+              @font-face {
+                font-family: 'Atma';
+                font-style: normal;
+                font-weight: 700;
+                src: url(https://fonts.gstatic.com/s/atma/v15/uK_z4rqWc-Eoo9J0GjA3P9WeVkI.woff2) format('woff2');
+                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+              }
+          `,
+            }}
+          />
           {(this.props as any).emotionStyleTags}
         </Head>
         <body>

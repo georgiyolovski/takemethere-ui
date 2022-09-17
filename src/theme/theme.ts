@@ -68,7 +68,7 @@ const theme = createTheme({
           fontSize: 14,
           fontWeight: 700,
           textTransform: 'none',
-          maxHeight: 36,
+          minHeight: 43.5,
           minWidth: 145,
         },
         contained: {
