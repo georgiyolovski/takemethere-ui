@@ -50,8 +50,6 @@ interface JwtExtendedPayload {
   nbf: number;
 }
 
-export const SESSION_STORAGE_KEY = 'auth';
-
 const parseJWT = (jwt: string) => {
   try {
     const decoded = jwt_decode<JwtExtendedPayload>(jwt);
@@ -76,12 +74,17 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
       value={{
         auth: authState,
         setAuth: (token: string) => {
-          setAuthState(parseJWT(token));
-          sessionStorage.setItem(SESSION_STORAGE_KEY, authState?.token);
+          const parsed = parseJWT(token);
+          setAuthState(parsed);
+          sessionStorage.setItem('token', parsed.token);
+          sessionStorage.setItem('firstName', parsed.firstName);
+          sessionStorage.setItem('avatar', parsed.avatarUrl);
         },
         setDefaultAuth: () => {
           setAuthState(DEFAULT_AUTH_STATE);
-          sessionStorage.removeItem(SESSION_STORAGE_KEY);
+          sessionStorage.removeItem('token');
+          sessionStorage.removeItem('firstName');
+          sessionStorage.removeItem('avatar');
 
           router.push('/login');
         },
