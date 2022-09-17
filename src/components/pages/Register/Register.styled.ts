@@ -23,7 +23,3 @@ export const Avatar = styled(MuiAvatar)(({ theme }) => ({
 export const Form = styled('form')(({ theme }) => ({
   marginTop: theme.spacing(3),
 }));
-
-export const Image = styled('img')({
-  width: 200,
-});

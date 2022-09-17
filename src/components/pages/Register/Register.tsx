@@ -4,31 +4,43 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { useRouter } from 'next/router';
+import { apiEndpoint } from '../../../constants';
+import { useAuth } from '../../../context/AuthContext';
 import Copyright from '../../small/Copyright/Copyright';
 import GoogleLogin from '../../small/GoogleLogin/GoogleLogin';
+import Image from '../../small/Image/Image';
 import PasswordTextField from '../../small/PasswordTextField/PasswordTextField';
-import { Button, Div, Form, Image } from './Register.styled';
-
-interface IForm {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-}
+import { Button, Div, Form } from './Register.styled';
 
 const Register = () => {
-  const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
+  const { setAuth } = useAuth();
+  const router = useRouter();
+
+  const handleSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     const data = new FormData(ev.currentTarget);
 
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-      passwordConfirm: data.get('password-confirm'),
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
+    const response = await fetch(`${apiEndpoint}/auth/register`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: data.get('email'),
+        first_name: data.get('firstName'),
+        last_name: data.get('lastName'),
+        password: data.get('password'),
+      }),
     });
+
+    const json = await response.json();
+
+    if (json.token) {
+      setAuth(json.token);
+      router.push('/');
+    }
   };
 
   return (
@@ -97,7 +109,7 @@ const Register = () => {
         </Form>
         or
       </Div>
-      <GoogleLogin label='Signup with Google' />
+      <GoogleLogin label='Signup with Google' action='register' />
       <Copyright />
     </Container>
   );

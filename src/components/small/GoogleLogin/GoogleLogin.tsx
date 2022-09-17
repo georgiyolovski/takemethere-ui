@@ -1,9 +1,11 @@
+import { useRouter } from 'next/router';
 import {
   GoogleLogin as GoogleLoginButton,
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from 'react-google-login';
-import { refreshGoogleTokenSetup } from '../../../../helpers/auth';
+import { apiEndpoint } from '../../../constants';
+import { useAuth } from '../../../context/AuthContext';
 import styled from '../../../theme/styled';
 
 const clientId =
@@ -11,6 +13,7 @@ const clientId =
 
 interface IProps {
   label: string;
+  action: 'register' | 'login';
 }
 
 const Div = styled('div')(({ theme }) => ({
@@ -25,10 +28,33 @@ const Div = styled('div')(({ theme }) => ({
   },
 }));
 
-const GoogleLogin: React.FC<IProps> = ({ label }) => {
-  const onSuccess = (res: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-    console.log(res);
-    refreshGoogleTokenSetup(res as GoogleLoginResponse);
+const GoogleLogin: React.FC<IProps> = ({ action, label }) => {
+  const { auth, setAuth } = useAuth();
+  const router = useRouter();
+
+  const onSuccess = async (
+    res: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => {
+    if (auth?.token) {
+      router.push('/');
+    } else {
+      const response = await fetch(`${apiEndpoint}/auth/${action}/google`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          token: (res as GoogleLoginResponse).tokenId,
+        }),
+      });
+      const json = await response.json();
+
+      if (json.token) {
+        setAuth(json.token);
+        router.push('/');
+      }
+    }
   };
 
   const onFailure = (err: any) => {
