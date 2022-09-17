@@ -73,7 +73,6 @@ const DestinationAutocomplete = ({
           onChange(option.id);
         }
       }}
-      loading={loading}
       renderOption={(props, option) => (
         <Typography
           variant='body2'
@@ -115,7 +114,6 @@ const DestinationAutocomplete = ({
           }}
         />
       )}
-      disabled={loading}
     />
   );
 };
