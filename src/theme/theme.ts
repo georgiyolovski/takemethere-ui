@@ -5,6 +5,7 @@ export const Colors = {
   blue1: '#1a75ff',
   blue2: '#1a75ff80',
   gray1: '#c2c2c2',
+  gray2: '#808080',
   green1: '#32b94d',
   green2: '#ecfbe6',
   red1: '#ff1a43',
@@ -47,6 +48,10 @@ const theme = createTheme({
     h4: {
       fontFamily: 'Atma',
       fontWeight: 500,
+    },
+    body2: {
+      fontFamily: 'Atma',
+      color: Colors.gray2,
     },
   },
   components: {
