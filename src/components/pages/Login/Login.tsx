@@ -40,7 +40,7 @@ const Login = () => {
 
     if (json.token) {
       setAuth(json.token);
-      router.push('/');
+      router.push('/my-trips');
     }
   };
 
