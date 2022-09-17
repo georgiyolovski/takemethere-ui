@@ -36,7 +36,7 @@ const GoogleLogin: React.FC<IProps> = ({ action, label }) => {
     res: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
     if (auth?.token) {
-      router.push('/');
+      router.push('/my-trips');
     } else {
       const response = await fetch(`${apiEndpoint}/auth/${action}/google`, {
         method: 'POST',
@@ -52,7 +52,7 @@ const GoogleLogin: React.FC<IProps> = ({ action, label }) => {
 
       if (json.token) {
         setAuth(json.token);
-        router.push('/');
+        router.push('/my-trips');
       }
     }
   };

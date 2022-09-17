@@ -1,5 +1,6 @@
 import jwt_decode from 'jwt-decode';
-import React, { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useContext, useState } from 'react';
 
 export interface IAuth {
   avatarUrl: string;
@@ -11,7 +12,8 @@ export interface IAuth {
 
 interface IAuthContext {
   auth: IAuth | null;
-  setAuth: (toke: string) => void;
+  setAuth: (token: string) => void;
+  setDefaultAuth: () => void;
 }
 
 const DEFAULT_AUTH_STATE: IAuth = {
@@ -25,6 +27,7 @@ const DEFAULT_AUTH_STATE: IAuth = {
 const DEFAULT_CONTEXT: IAuthContext = {
   auth: null,
   setAuth: () => {},
+  setDefaultAuth: () => {},
 };
 
 const AuthStateContext = React.createContext(DEFAULT_CONTEXT);
@@ -66,12 +69,7 @@ const parseJWT = (jwt: string) => {
 
 const AuthProvider: React.FC<IProps> = ({ children }) => {
   const [authState, setAuthState] = useState<IAuth>(DEFAULT_AUTH_STATE);
-
-  useEffect(() => {
-    if (authState.token) {
-      sessionStorage.setItem(SESSION_STORAGE_KEY, authState?.token);
-    }
-  }, [authState]);
+  const router = useRouter();
 
   return (
     <AuthStateContext.Provider
@@ -79,6 +77,13 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
         auth: authState,
         setAuth: (token: string) => {
           setAuthState(parseJWT(token));
+          sessionStorage.setItem(SESSION_STORAGE_KEY, authState?.token);
+        },
+        setDefaultAuth: () => {
+          setAuthState(DEFAULT_AUTH_STATE);
+          sessionStorage.removeItem(SESSION_STORAGE_KEY);
+
+          router.push('/login');
         },
       }}
     >
