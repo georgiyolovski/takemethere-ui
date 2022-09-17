@@ -22,7 +22,7 @@ const Layout: React.FC<IProps> = ({ title, children }) => {
       >
         <Box
           sx={{
-            width: '100%',
+            width: { xs: '100%', md: '70%' },
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
