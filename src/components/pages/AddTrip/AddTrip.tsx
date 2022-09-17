@@ -10,10 +10,54 @@ import format from 'date-fns/format';
 import { useState } from 'react';
 import { apiEndpoint } from '../../../constants';
 import { useAuth } from '../../../context/AuthContext';
+import Flights from '../../big/Flights/Flights';
 import Layout from '../../big/Layout/Layout';
 import DatePicker from '../../small/DatePicker/DatePicker';
 import DestinationAutocomplete from '../../small/DestinationAutocomplete/DestinationAutocomplete';
 import { Form } from '../Register/Register.styled';
+
+interface IFlight {
+  outgoing: {
+    legs: {
+      arrival_time: string;
+      carrier: {
+        logo: string;
+        name: string;
+      };
+      departure: string;
+      departure_time: string;
+      destination: string;
+    }[];
+    notes: string[];
+    price: {
+      amount: number;
+      id: string;
+      impressionId: string;
+    };
+    search_hash: string;
+    search_id: string;
+  }[];
+  return: {
+    legs: {
+      arrival_time: string;
+      carrier: {
+        logo: string;
+        name: string;
+      };
+      departure: string;
+      departure_time: string;
+      destination: string;
+    }[];
+    notes: string[];
+    price: {
+      amount: 19.0;
+      id: string;
+      impressionId: string;
+    };
+    search_hash: string;
+    search_id: string;
+  }[];
+}
 
 const AddTrip = () => {
   const { auth } = useAuth();
@@ -30,6 +74,7 @@ const AddTrip = () => {
   const [location, setLocation] = useState<null | number>(null);
 
   const [searchSessionId, setSearchSessionId] = useState<null | number>(null);
+
   const handleSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
 
@@ -230,6 +275,7 @@ const AddTrip = () => {
           Take Me There
         </Button>
       </Form>
+      {searchSessionId && <Flights searchSessionId={searchSessionId} />}
     </Layout>
   );
 };
