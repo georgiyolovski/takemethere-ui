@@ -41,7 +41,7 @@ const AddTrip = () => {
   };
 
   return (
-    <Layout title='Add a Trip'>
+    <Layout showLink title='Add a Trip'>
       <AddTripForm
         onSubmitCallback={(id) => setSearchSessionId(id)}
         onRemoveFlightUrls={() => setFlightTicketsUrls([])}
