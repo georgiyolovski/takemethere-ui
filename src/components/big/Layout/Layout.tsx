@@ -32,7 +32,7 @@ const Layout: React.FC<IProps> = ({ title, children }) => {
             {title}
           </Typography>
 
-          {children}
+          <div style={{ width: '100%' }}>{children}</div>
         </Box>
       </Box>
     </>

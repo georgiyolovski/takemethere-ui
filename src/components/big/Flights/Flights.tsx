@@ -1,50 +1,13 @@
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Grid, Typography } from '@mui/material';
 import Box from '@mui/system/Box';
 import { useCallback, useEffect, useState } from 'react';
 import { apiEndpoint } from '../../../constants';
 import { useAuth } from '../../../context/AuthContext';
+import FlightCard, { IFlight } from '../FlightCard/FlightCard';
 
-interface IFlight {
-  outgoing: {
-    legs: {
-      arrival_time: string;
-      carrier: {
-        logo: string;
-        name: string;
-      };
-      departure: string;
-      departure_time: string;
-      destination: string;
-    }[];
-    notes: string[];
-    price: {
-      amount: number;
-      id: string;
-      impressionId: string;
-    };
-    search_hash: string;
-    search_id: string;
-  }[];
-  return: {
-    legs: {
-      arrival_time: string;
-      carrier: {
-        logo: string;
-        name: string;
-      };
-      departure: string;
-      departure_time: string;
-      destination: string;
-    }[];
-    notes: string[];
-    price: {
-      amount: 19.0;
-      id: string;
-      impressionId: string;
-    };
-    search_hash: string;
-    search_id: string;
-  }[];
+interface IFlights {
+  outgoing: IFlight[];
+  return: IFlight[];
 }
 
 interface IProps {
@@ -55,7 +18,7 @@ const Flights: React.FC<IProps> = ({ searchSessionId }) => {
   const { auth } = useAuth();
 
   const [loadingFlights, setLoadingFlights] = useState(false);
-  const [flights, setFlights] = useState<null | IFlight>(null);
+  const [flights, setFlights] = useState<null | IFlights>(null);
 
   const getFlights = useCallback(
     (id: number) => {
@@ -67,7 +30,7 @@ const Flights: React.FC<IProps> = ({ searchSessionId }) => {
         },
       })
         .then((res) => res.json())
-        .then((res: IFlight) => setFlights(res))
+        .then((res: IFlights) => setFlights(res))
         .catch((err) => console.log(err))
         .finally(() => setLoadingFlights(false));
     },
@@ -83,8 +46,44 @@ const Flights: React.FC<IProps> = ({ searchSessionId }) => {
   return (
     <>
       <Box mt={3}>
-        {loadingFlights && <CircularProgress />}
-        {flights && <>{JSON.stringify(flights)}</>}
+        {loadingFlights && (
+          <Box display='flex' justifyContent='center'>
+            <CircularProgress />
+          </Box>
+        )}
+        {flights && (
+          <Box width='100%'>
+            <>
+              <Grid container spacing={2} mt={4} mb={2}>
+                <Grid item xs={12}>
+                  <Typography variant='h4' sx={{ mr: 0.5 }}>
+                    Outgoing
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Box sx={{ width: '100%' }}>
+                {flights.outgoing.map((flight) => (
+                  <FlightCard key={flight.search_hash} flight={flight} />
+                ))}
+              </Box>
+            </>
+
+            <>
+              <Grid container spacing={2} mt={4} mb={2}>
+                <Grid item xs={12}>
+                  <Typography variant='h4' sx={{ mr: 0.5 }}>
+                    Return
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Box sx={{ width: '100%' }}>
+                {flights.return.map((flight) => (
+                  <FlightCard key={flight.search_hash} flight={flight} />
+                ))}
+              </Box>
+            </>
+          </Box>
+        )}
       </Box>
     </>
   );

@@ -56,7 +56,7 @@ const DestinationAutocomplete = ({
       inputValue={inputValue}
       onInputChange={(_, value, reason) => {
         setInputValue(value);
-        if (reason === 'input' && value.length > 3) {
+        if (reason === 'input' && value.length >= 1) {
           setOptions([]);
           onChange(null);
 
