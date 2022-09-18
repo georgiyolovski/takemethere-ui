@@ -56,14 +56,17 @@ const Flights: React.FC<IProps> = ({ searchSessionId }) => {
             <>
               <Grid container spacing={2} mt={4} mb={2}>
                 <Grid item xs={12}>
-                  <Typography variant='h4' sx={{ mr: 0.5 }}>
-                    Outgoing
-                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography variant='h4' sx={{ mr: 0.5 }}>
+                      Outgoing
+                    </Typography>
+                    <Typography variant='body2'>(select a flight)</Typography>
+                  </Box>
                 </Grid>
               </Grid>
               <Box sx={{ width: '100%' }}>
                 {flights.outgoing.map((flight) => (
-                  <FlightCard key={flight.search_hash} flight={flight} />
+                  <FlightCard key={JSON.stringify(flight)} flight={flight} />
                 ))}
               </Box>
             </>
@@ -71,14 +74,17 @@ const Flights: React.FC<IProps> = ({ searchSessionId }) => {
             <>
               <Grid container spacing={2} mt={4} mb={2}>
                 <Grid item xs={12}>
-                  <Typography variant='h4' sx={{ mr: 0.5 }}>
-                    Return
-                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography variant='h4' sx={{ mr: 0.5 }}>
+                      Return
+                    </Typography>
+                    <Typography variant='body2'>(select a flight)</Typography>
+                  </Box>
                 </Grid>
               </Grid>
               <Box sx={{ width: '100%' }}>
                 {flights.return.map((flight) => (
-                  <FlightCard key={flight.search_hash} flight={flight} />
+                  <FlightCard key={JSON.stringify(flight)} flight={flight} />
                 ))}
               </Box>
             </>
