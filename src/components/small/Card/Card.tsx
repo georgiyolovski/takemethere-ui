@@ -3,10 +3,12 @@ import Box from '@mui/system/Box';
 interface IProps {
   children: React.ReactNode;
   key: string;
+  onClick?: () => void;
 }
 
-const Card: React.FC<IProps> = ({ children, key }) => (
+const Card: React.FC<IProps> = ({ children, key, onClick }) => (
   <Box
+    onClick={onClick}
     key={key}
     mb={{ xs: 4, md: 1 }}
     sx={{

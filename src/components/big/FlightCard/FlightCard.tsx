@@ -6,11 +6,13 @@ import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
 import format from 'date-fns/format';
+import { useState } from 'react';
+import { apiEndpoint } from '../../../constants';
 import styled from '../../../theme/styled';
 import { Colors } from '../../../theme/theme';
 import Card from '../../small/Card/Card';
 
-const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
+const ColorlibConnector = styled(StepConnector)(() => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 22,
   },
@@ -64,8 +66,24 @@ interface IProps {
 }
 
 const FlightCard: React.FC<IProps> = ({ flight }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleClickFlight = () => {
+    fetch(
+      `${apiEndpoint}/booking_url?search_hash=${flight.search_hash}&destination=CIA&id=${flight.price.id}&origin=OFS&search_id=${flight.search_id}&impression_id=${flight.price.impressionId}`
+    )
+      .then((res) => res.json())
+      .then((res: { booking_url?: string }) => {
+        if (res.booking_url) {
+          window.open(res.booking_url, '_blank')?.focus();
+        }
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  };
+
   return (
-    <Card key={flight.search_hash}>
+    <Card key={flight.search_hash} onClick={() => {}}>
       <Stepper
         alternativeLabel
         // activeStep={3} or activeStep={flight.legs.length}
@@ -86,12 +104,13 @@ const FlightCard: React.FC<IProps> = ({ flight }) => {
                 />
               )}
             >
+              {/* Click this? */}
               <Box>
                 <Typography
                   variant='h5'
                   sx={{ color: Colors.black, fontWeight: 500 }}
                 >
-                  {leg.destination} - {leg.departure}
+                  {leg.departure} - {leg.destination}
                 </Typography>
                 <Typography
                   variant='h5'
