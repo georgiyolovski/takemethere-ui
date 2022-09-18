@@ -56,7 +56,13 @@ const Flights: React.FC<IProps> = ({ searchSessionId }) => {
             <>
               <Grid container spacing={2} mt={4} mb={2}>
                 <Grid item xs={12}>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     <Typography variant='h4' sx={{ mr: 0.5 }}>
                       Outgoing
                     </Typography>
@@ -74,7 +80,13 @@ const Flights: React.FC<IProps> = ({ searchSessionId }) => {
             <>
               <Grid container spacing={2} mt={4} mb={2}>
                 <Grid item xs={12}>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     <Typography variant='h4' sx={{ mr: 0.5 }}>
                       Return
                     </Typography>
