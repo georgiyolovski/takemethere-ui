@@ -104,7 +104,7 @@ const Login = () => {
               autoComplete='current-password'
             />
             <FormControlLabel
-              control={<Checkbox value='remember' color='primary' />}
+              control={<Checkbox color='secondary' value='remember' />}
               label='Remember me'
             />
             <Button
@@ -131,7 +131,7 @@ const Login = () => {
               or
             </Grid>
             <Grid container>
-              <GoogleLogin action='login' label='Login with Google' />
+              <GoogleLogin action='login' />
             </Grid>
             <Copyright />
           </Box>

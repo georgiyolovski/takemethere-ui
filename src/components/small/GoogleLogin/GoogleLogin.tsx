@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
 import { GoogleLogin as GoogleLoginBtn } from '@react-oauth/google';
+import { useRouter } from 'next/router';
 import { apiEndpoint } from '../../../constants';
 import { useAuth } from '../../../context/AuthContext';
 import styled from '../../../theme/styled';
 
 interface IProps {
-  label: string;
   action: 'register' | 'login';
 }
 
@@ -23,7 +22,7 @@ const Div = styled('div')(({ theme }) => ({
   },
 }));
 
-const GoogleLogin: React.FC<IProps> = ({ action, label }) => {
+const GoogleLogin: React.FC<IProps> = ({ action }) => {
   const { auth, setAuth } = useAuth();
   const router = useRouter();
 

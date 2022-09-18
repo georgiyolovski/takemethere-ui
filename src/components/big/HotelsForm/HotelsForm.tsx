@@ -1,33 +1,42 @@
-import { CircularProgress, Grid, Typography } from '@mui/material';
+import { Button, CircularProgress, Grid, Typography } from '@mui/material';
 import Box from '@mui/system/Box';
 import { useCallback, useEffect, useState } from 'react';
 import { apiEndpoint } from '../../../constants';
 import { useAuth } from '../../../context/AuthContext';
-import PlaceCard, { IPlace } from '../PlaceCard/PlaceCard';
+import HotelCard, { IHotel } from '../HotelCard/HotelCard';
 
 interface IProps {
-  onSelectPlace: (place: IPlace) => void;
+  onSelectHotel: (hotel: IHotel) => void;
   searchSessionId: number;
+  isSubmitDisabled: boolean;
+  onSubmit: () => void;
+  selectedHotel: IHotel | null;
 }
 
-const PlacesForm: React.FC<IProps> = ({ onSelectPlace, searchSessionId }) => {
-  const [places, setPlaces] = useState<IPlace[] | null>(null);
+const HotelsForm: React.FC<IProps> = ({
+  onSelectHotel,
+  onSubmit,
+  searchSessionId,
+  isSubmitDisabled,
+  selectedHotel,
+}) => {
+  const [hotels, setHotels] = useState<IHotel[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const { auth } = useAuth();
 
-  const getPlaces = useCallback(
+  const getHotels = useCallback(
     (id: number) => {
       setLoading(true);
 
-      fetch(`${apiEndpoint}/search_sessions/${id}/places`, {
+      fetch(`${apiEndpoint}/search_sessions/${id}/hotels`, {
         headers: {
           Authorization: `${auth?.token}`,
         },
       })
         .then((res) => res.json())
-        .then((res: IPlace[]) => setPlaces(res))
+        .then((res: IHotel[]) => setHotels(res))
         .catch(() => setError(true))
         .finally(() => setLoading(false));
     },
@@ -36,9 +45,9 @@ const PlacesForm: React.FC<IProps> = ({ onSelectPlace, searchSessionId }) => {
 
   useEffect(() => {
     if (searchSessionId) {
-      getPlaces(searchSessionId);
+      getHotels(searchSessionId);
     }
-  }, [getPlaces, searchSessionId]);
+  }, [getHotels, searchSessionId]);
 
   return (
     <Box mt={3}>
@@ -63,23 +72,32 @@ const PlacesForm: React.FC<IProps> = ({ onSelectPlace, searchSessionId }) => {
               }}
             >
               <Typography variant='h4' sx={{ mr: 0.5 }}>
-                Attractions
+                Hotels
               </Typography>
-              <Typography variant='body2'>(select at least 1)</Typography>
+              <Typography variant='body2'>(select a hotel)</Typography>
             </Box>
           </Grid>
         </Grid>
       )}
-      {places &&
-        places.map((place) => (
-          <PlaceCard
-            key={JSON.stringify(place)}
-            place={place}
-            onClick={() => onSelectPlace(place)}
+      {hotels &&
+        hotels.map((hotel) => (
+          <HotelCard
+            key={JSON.stringify(hotel)}
+            hotel={hotel}
+            onClick={() => onSelectHotel(hotel)}
+            isChecked={selectedHotel?.id === hotel.id}
           />
         ))}
+      <Button
+        variant='contained'
+        fullWidth
+        disabled={isSubmitDisabled}
+        onClick={onSubmit}
+      >
+        Save My Trip
+      </Button>
     </Box>
   );
 };
 
-export default PlacesForm;
+export default HotelsForm;

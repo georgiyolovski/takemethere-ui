@@ -1,9 +1,9 @@
-import { url } from 'inspector';
+import Button from '@mui/material/Button';
 import type { NextPage } from 'next';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from '../src/theme/styled';
 
-const HomePage = styled('div')(({ theme }) => ({
+const HomePage = styled('div')(() => ({
   width: '100%',
   height: '100vh',
   alignItems: 'center',
@@ -31,14 +31,6 @@ const ContentSection = styled('div')(({ theme }) => ({
     padding: 50,
   },
 
-  a: {
-    padding: '10px 20px',
-    backgroundColor: '#32b94d',
-    color: 'white',
-    borderRadius: 10,
-    textDecoration: 'none',
-  },
-
   h1: {
     [theme.breakpoints.down('md')]: {
       textAlign: 'center',
@@ -62,20 +54,9 @@ const ContentSection = styled('div')(({ theme }) => ({
 }));
 
 const Home: NextPage = () => {
-  //TODO: Add styles to Home Page
+  const router = useRouter();
+
   return (
-    // <header className='header'>
-    //   <div className='text-box'>
-    //     <h1 className='heading-primary'>
-    //       <span className='heading-primary-main'>Dive in!</span>
-    //       <span className='heading-primary-sub'>Check out our quizzes!</span>
-    //     </h1>
-    //     <div className='auth-btns'>
-    //       <Link href='/register'> SIGN UP</Link>
-    //       <Link href='/login'>LOG IN</Link>
-    //     </div>
-    //   </div>
-    // </header>
     <HomePage>
       <ContentSection>
         <img src='/logo/svg/tmd_logo_no_text.svg' width={400} />
@@ -87,7 +68,9 @@ const Home: NextPage = () => {
             <li>Hotel bookings</li>
             <li>Places to visit</li>
           </ul>
-          <a href='/login'>Get started now!</a>
+          <Button variant='contained' onClick={() => router.push('/login')}>
+            Get started now!
+          </Button>
         </div>
       </ContentSection>
     </HomePage>

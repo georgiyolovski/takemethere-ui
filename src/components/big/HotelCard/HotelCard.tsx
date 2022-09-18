@@ -1,29 +1,25 @@
+import { Radio } from '@mui/material';
 import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import Chip from '@mui/material/Chip';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import Image from '../../small/Image/Image';
 
-export interface IPlace {
-  id: string;
+export interface IHotel {
   address: string;
-  image_url: string;
-  location: {
-    lat: number;
-    lng: number;
-  };
+  full_price: number;
+  id: string;
   name: string;
+  picture_url: string;
   rating: number;
-  tags: string[];
 }
 
 interface IProps {
-  place: IPlace;
+  hotel: IHotel;
   onClick: () => void;
+  isChecked: boolean;
 }
 
-const PlaceCard: React.FC<IProps> = ({ place, onClick }) => {
+const HotelCard: React.FC<IProps> = ({ hotel, onClick, isChecked }) => {
   return (
     <Box
       mb={4}
@@ -45,23 +41,22 @@ const PlaceCard: React.FC<IProps> = ({ place, onClick }) => {
       }}
     >
       <Box mt='auto' mb='auto' mr={{ md: 2 }}>
-        <Checkbox color='secondary' onChange={onClick} />
+        <Radio onChange={onClick} checked={isChecked} />
       </Box>
-
-      <Image src={place.image_url} />
+      <Image src={hotel.picture_url} />
       <Box ml={2} mt={{ xs: 1, md: 0 }}>
         <Typography
           variant='h5'
           sx={{ textAlign: { xs: 'center', md: 'left' } }}
         >
-          {place.name}
+          {hotel.name}
         </Typography>
         <Typography
           variant='caption'
           component='p'
           sx={{ textAlign: { xs: 'center', md: 'left' } }}
         >
-          {place.address}
+          {hotel.address}
         </Typography>
         <Box
           sx={{
@@ -70,31 +65,17 @@ const PlaceCard: React.FC<IProps> = ({ place, onClick }) => {
             mb: 1,
           }}
         >
-          <Rating readOnly defaultValue={place.rating} precision={0.1} />
+          <Rating readOnly defaultValue={hotel.rating} precision={0.1} />
         </Box>
-        <Box
-          sx={{
-            display: { xs: 'flex', md: 'flow-root' },
-            flexDirection: { xs: 'column', md: 'row' },
-            justifyContent: { xs: 'center', md: 'unset' },
-          }}
+        <Typography
+          variant='h4'
+          sx={{ textAlign: { xs: 'center', md: 'left' } }}
         >
-          {place.tags.map((tag) => (
-            <Chip
-              key={tag}
-              label={tag.replaceAll('_', ' ')}
-              sx={{
-                mr: { xs: 'auto', md: 0.5 },
-                mb: 0.5,
-                width: 'fit-content',
-                ml: 'auto',
-              }}
-            />
-          ))}
-        </Box>
+          ${hotel.full_price}
+        </Typography>
       </Box>
     </Box>
   );
 };
 
-export default PlaceCard;
+export default HotelCard;

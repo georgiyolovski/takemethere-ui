@@ -109,7 +109,7 @@ const Register = () => {
         </Form>
         or
       </Div>
-      <GoogleLogin label='Signup with Google' action='register' />
+      <GoogleLogin action='register' />
       <Copyright />
     </Container>
   );
