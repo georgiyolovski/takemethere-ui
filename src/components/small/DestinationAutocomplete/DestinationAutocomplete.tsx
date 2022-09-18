@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { apiEndpoint } from '../../../constants';
 import { useAuth } from '../../../context/AuthContext';
 
-interface IOption {
+export interface ILocation {
   country: string;
   id: number;
   name: string;
@@ -18,11 +18,11 @@ interface IOption {
 const DestinationAutocomplete = ({
   onChange,
 }: {
-  onChange: (id: number | null) => void;
+  onChange: (option: ILocation | null) => void;
 }) => {
   const { auth } = useAuth();
 
-  const [options, setOptions] = useState<IOption[]>([]);
+  const [options, setOptions] = useState<ILocation[]>([]);
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
@@ -70,7 +70,7 @@ const DestinationAutocomplete = ({
         if (typeof option === 'string' || !option?.id) {
           onChange(null);
         } else {
-          onChange(option.id);
+          onChange(option);
         }
       }}
       renderOption={(props, option) => (
@@ -92,7 +92,6 @@ const DestinationAutocomplete = ({
       renderInput={(params) => (
         <TextField
           {...params}
-          autoComplete='off'
           fullWidth
           label='Destination'
           variant='outlined'
@@ -111,7 +110,7 @@ const DestinationAutocomplete = ({
           }}
           inputProps={{
             ...params.inputProps,
-            autoComplete: 'no',
+            autoComplete: 'off',
           }}
         />
       )}
