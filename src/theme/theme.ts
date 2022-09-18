@@ -49,6 +49,10 @@ const theme = createTheme({
       fontFamily: 'Atma',
       fontWeight: 500,
     },
+    h5: {
+      fontFamily: 'Atma',
+      fontWeight: 500,
+    },
     body2: {
       fontFamily: 'Atma',
       color: Colors.gray2,
