@@ -56,7 +56,7 @@ const DestinationAutocomplete = ({
       inputValue={inputValue}
       onInputChange={(_, value, reason) => {
         setInputValue(value);
-        if (reason === 'input' && value.length > 3) {
+        if (reason === 'input' && value.length >= 1) {
           setOptions([]);
           onChange(null);
 
@@ -73,7 +73,6 @@ const DestinationAutocomplete = ({
           onChange(option.id);
         }
       }}
-      loading={loading}
       renderOption={(props, option) => (
         <Typography
           variant='body2'
@@ -115,7 +114,6 @@ const DestinationAutocomplete = ({
           }}
         />
       )}
-      disabled={loading}
     />
   );
 };
