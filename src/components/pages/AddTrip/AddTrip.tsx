@@ -16,7 +16,6 @@ const AddTrip = () => {
   const [places, setPlaces] = useState<IPlace[]>([]);
   const [hotel, setHotel] = useState<IHotel | null>(null);
 
-  console.log(hotel);
   const { auth } = useAuth();
   const router = useRouter();
 
