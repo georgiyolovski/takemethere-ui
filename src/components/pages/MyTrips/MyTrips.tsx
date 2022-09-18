@@ -2,6 +2,9 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { IconButton, Typography } from '@mui/material';
 import Box from '@mui/system/Box';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { apiEndpoint } from '../../../constants';
+import { useAuth } from '../../../context/AuthContext';
 import Layout from '../../big/Layout/Layout';
 import TripCard from '../../big/TripCard/TripCard';
 interface IProps {
@@ -13,8 +16,22 @@ interface IProps {
   }[];
 }
 
-const MyTrips: React.FC<IProps> = ({ trips = [] }) => {
+const MyTrips: React.FC<IProps> = () => {
   const router = useRouter();
+
+  const { auth } = useAuth();
+  const [trips, setTrips] = useState([]);
+
+  useEffect(() => {
+    fetch(`${apiEndpoint}/trips`, {
+      headers: {
+        Authorization: `${auth?.token}`,
+      },
+    })
+    .then((res) => res.json())
+    .then((items) => setTrips(items))
+    .catch((err) => console.log(err));
+  }, [apiEndpoint, auth?.token]);
 
   return (
     <Layout
@@ -31,18 +48,21 @@ const MyTrips: React.FC<IProps> = ({ trips = [] }) => {
             </Typography>
           </Box>
         )}
-
-        {trips && trips.length
-          ? trips.map(({ from, to, destination, src }) => (
-              <TripCard
-                key={`${from}-${to}-${destination}`}
-                from={from}
-                to={to}
-                destination={destination}
-                src={src}
-              />
-            ))
-          : null}
+        <Box
+          sx={{width: '100%', display: 'flex', flexDirection: {xs: 'column', md: 'row'}, justifyContent: 'center'}}>
+          {trips && trips.length
+            ? trips.map(({ start_date, end_date, title, adults, cover_url }) => (
+                <TripCard
+                  key={title}
+                  start_date={start_date}
+                  end_date={end_date}
+                  title={title}
+                  adults={adults}
+                  cover_url={cover_url}
+                />
+              ))
+            : null}
+        </Box>
 
         <Box width='100%' justifyContent='center' display='flex'>
           <IconButton
