@@ -1,44 +1,13 @@
 import Box from '@mui/material/Box';
 import Step from '@mui/material/Step';
-import StepConnector from '@mui/material/StepConnector/StepConnector';
-import stepConnectorClasses from '@mui/material/StepConnector/stepConnectorClasses';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
 import format from 'date-fns/format';
-import { useState } from 'react';
 import { apiEndpoint } from '../../../constants';
-import styled from '../../../theme/styled';
+import { useAuth } from '../../../context/AuthContext';
 import { Colors } from '../../../theme/theme';
 import Card from '../../small/Card/Card';
-
-const ColorlibConnector = styled(StepConnector)(() => ({
-  [`&.${stepConnectorClasses.alternativeLabel}`]: {
-    top: 22,
-  },
-  [`&.${stepConnectorClasses.active}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      backgroundImage:
-        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)!important',
-    },
-  },
-  [`&.${stepConnectorClasses.completed}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      backgroundImage:
-        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)!important',
-    },
-  },
-  [`& .${stepConnectorClasses.line}`]: {
-    height: 3,
-    border: 0,
-    backgroundImage:
-      'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)!important',
-
-    // backgroundColor:
-    //   theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-    borderRadius: 1,
-  },
-}));
 
 export interface IFlight {
   legs: {
@@ -62,11 +31,12 @@ export interface IFlight {
 }
 
 interface IProps {
+  key: string;
   flight: IFlight;
 }
 
-const FlightCard: React.FC<IProps> = ({ flight }) => {
-  const [loading, setLoading] = useState(false);
+const FlightCard: React.FC<IProps> = ({ key, flight }) => {
+  const { auth } = useAuth();
 
   const handleClickFlight = () => {
     fetch(
@@ -76,7 +46,12 @@ const FlightCard: React.FC<IProps> = ({ flight }) => {
         flight.price.id
       }&origin=${flight.legs[0].departure}&search_id=${
         flight.search_id
-      }&impression_id=${flight.price.impressionId}`
+      }&impression_id=${flight.price.impressionId}`,
+      {
+        headers: {
+          Authorization: `${auth?.token}`,
+        },
+      }
     )
       .then((res) => res.json())
       .then((res: { booking_url?: string }) => {
@@ -84,33 +59,29 @@ const FlightCard: React.FC<IProps> = ({ flight }) => {
           window.open(res.booking_url, '_blank')?.focus();
         }
       })
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
+      .catch((err) => console.log(err));
   };
 
   return (
-    <Card key={flight.search_hash} onClick={handleClickFlight}>
-      <Stepper
-        alternativeLabel
-        // activeStep={3} or activeStep={flight.legs.length}
-        connector={<ColorlibConnector />}
-      >
+    <Card key={key} onClick={handleClickFlight}>
+      <Stepper alternativeLabel>
         {flight.legs.map((leg) => (
           <Step key={leg.departure_time}>
             <StepLabel
               StepIconComponent={(props) => (
                 <img
+                  {...props}
                   style={{
                     height: 50,
                     width: 50,
                     borderRadius: '50%',
+                    border: `1px dotted ${Colors.gray2}`,
                   }}
-                  {...props}
                   src={leg.carrier.logo}
                 />
               )}
             >
-              <Box>
+              <div>
                 <Typography
                   variant='h5'
                   sx={{ color: Colors.black, fontWeight: 500 }}
@@ -137,7 +108,7 @@ const FlightCard: React.FC<IProps> = ({ flight }) => {
                 >
                   {format(new Date(leg.arrival_time), 'MMM dd, yyyy p')}
                 </Typography>
-              </Box>
+              </div>
             </StepLabel>
           </Step>
         ))}

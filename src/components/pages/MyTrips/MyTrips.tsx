@@ -44,13 +44,15 @@ const MyTrips: React.FC<IProps> = ({ trips = [] }) => {
             ))
           : null}
 
-        <IconButton
-          onClick={() => {
-            router.push('/add-trip');
-          }}
-        >
-          <AddCircleIcon color='secondary' fontSize='large' />
-        </IconButton>
+        <Box width='100%' justifyContent='center' display='flex'>
+          <IconButton
+            onClick={() => {
+              router.push('/add-trip');
+            }}
+          >
+            <AddCircleIcon color='secondary' fontSize='large' />
+          </IconButton>
+        </Box>
       </>
     </Layout>
   );
