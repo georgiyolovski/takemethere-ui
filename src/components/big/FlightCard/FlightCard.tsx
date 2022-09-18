@@ -70,7 +70,13 @@ const FlightCard: React.FC<IProps> = ({ flight }) => {
 
   const handleClickFlight = () => {
     fetch(
-      `${apiEndpoint}/booking_url?search_hash=${flight.search_hash}&destination=CIA&id=${flight.price.id}&origin=OFS&search_id=${flight.search_id}&impression_id=${flight.price.impressionId}`
+      `${apiEndpoint}/booking_url?search_hash=${
+        flight.search_hash
+      }&destination=${flight.legs[flight.legs.length - 1].destination}&id=${
+        flight.price.id
+      }&origin=${flight.legs[0].departure}&search_id=${
+        flight.search_id
+      }&impression_id=${flight.price.impressionId}`
     )
       .then((res) => res.json())
       .then((res: { booking_url?: string }) => {
@@ -83,7 +89,7 @@ const FlightCard: React.FC<IProps> = ({ flight }) => {
   };
 
   return (
-    <Card key={flight.search_hash} onClick={() => {}}>
+    <Card key={flight.search_hash} onClick={handleClickFlight}>
       <Stepper
         alternativeLabel
         // activeStep={3} or activeStep={flight.legs.length}
@@ -104,7 +110,6 @@ const FlightCard: React.FC<IProps> = ({ flight }) => {
                 />
               )}
             >
-              {/* Click this? */}
               <Box>
                 <Typography
                   variant='h5'
