@@ -8,9 +8,11 @@ interface IProps {
   end_date: Date;
   title: string;
   cover_url: string;
+  onClick: () => void;
 }
 
 const TripCard: React.FC<IProps> = ({
+  onClick,
   start_date,
   end_date,
   title,
@@ -18,6 +20,7 @@ const TripCard: React.FC<IProps> = ({
 }) => (
   <Box
     m={2}
+    onClick={onClick}
     sx={{
       width: { xs: '100%', md: '450px' },
       borderRadius: 4,
