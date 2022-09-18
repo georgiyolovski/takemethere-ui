@@ -13,6 +13,7 @@ export const Colors = {
   yellow1: '#ffa31a',
   yellow2: '#ffa31a80',
   white: '#ffffff',
+  darkCyan: '#008b8b',
 };
 
 declare module '@mui/material/Button' {
@@ -28,7 +29,7 @@ const theme = createTheme({
       light: Colors.green2,
     },
     secondary: {
-      main: Colors.blue1,
+      main: Colors.darkCyan,
       light: Colors.blue2,
     },
     error: {
