@@ -209,6 +209,7 @@ const SingleTrip = () => {
                   {trip.hotels.items.length === 1 ? (
                     <Box mt={2} mb={2}>
                       <HotelCard
+                        bookingSubUrl={`start_date=${trip.start_date}&end_date=${trip.end_date}&adults=${trip.adults}&children=${trip.children}`}
                         isDetailsPage
                         key={JSON.stringify(trip.hotels.items[0])}
                         hotel={trip.hotels.items[0]}

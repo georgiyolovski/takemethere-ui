@@ -11,6 +11,7 @@ interface IProps {
   isSubmitDisabled: boolean;
   onSubmit: () => void;
   selectedHotel: IHotel | null;
+  bookingSubUrl: string;
 }
 
 const HotelsForm: React.FC<IProps> = ({
@@ -19,6 +20,7 @@ const HotelsForm: React.FC<IProps> = ({
   searchSessionId,
   isSubmitDisabled,
   selectedHotel,
+  bookingSubUrl,
 }) => {
   const [hotels, setHotels] = useState<IHotel[] | null>(null);
   const [loading, setLoading] = useState(false);
@@ -80,14 +82,20 @@ const HotelsForm: React.FC<IProps> = ({
         </Grid>
       )}
       {hotels &&
-        hotels.map((hotel) => (
+        hotels?.map((hotel) => (
           <HotelCard
+            bookingSubUrl={bookingSubUrl}
             key={JSON.stringify(hotel)}
             hotel={hotel}
             onClick={() => onSelectHotel(hotel)}
             isChecked={selectedHotel?.id === hotel.id}
           />
         ))}
+      {hotels && hotels?.length === 0 ? (
+        <Typography variant='h5' color='error' textAlign='center'>
+          No hotels found!
+        </Typography>
+      ) : null}
       <Button
         variant='contained'
         fullWidth
