@@ -20,8 +20,10 @@ import DestinationAutocomplete, {
 
 const AddTripForm = ({
   onSubmitCallback: setSearchSessionId,
+  onRemoveFlightUrls,
 }: {
   onSubmitCallback: (id: null | number) => void;
+  onRemoveFlightUrls: () => void;
 }) => {
   const { auth } = useAuth();
 
@@ -103,6 +105,7 @@ const AddTripForm = ({
             adults: 0,
           });
           setLocation(null);
+          onRemoveFlightUrls();
         }}
       >
         <Typography variant='h5' sx={{ color: Colors.gray2 }}>
@@ -135,7 +138,6 @@ const AddTripForm = ({
         <Typography variant='caption' sx={{ color: Colors.gray2 }}>
           {activities.join(', ')}
         </Typography>
-        <Typography>{activities.join(', ')}</Typography>
       </Box>
     );
   }
@@ -261,7 +263,7 @@ const AddTripForm = ({
               <Typography variant='h4' sx={{ mr: 0.5 }}>
                 Activities
               </Typography>
-              <Typography variant='body2'>(optional)</Typography>
+              <Typography variant='body2'>(select at least 1)</Typography>
             </Box>
           </Grid>
 
@@ -312,7 +314,19 @@ const AddTripForm = ({
             </FormGroup>
           </Grid>
         </Grid>
-        <Button type='submit' fullWidth variant='contained' sx={{ mt: 5 }}>
+        <Button
+          type='submit'
+          fullWidth
+          variant='contained'
+          sx={{ mt: 5 }}
+          disabled={
+            (people.adults === 0 && people.children === 0) ||
+            dateRange.from === null ||
+            dateRange.to === null ||
+            location === null ||
+            activities.length === 0
+          }
+        >
           Take Me There
         </Button>
       </Form>
