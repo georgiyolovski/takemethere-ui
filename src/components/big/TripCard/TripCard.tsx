@@ -1,13 +1,12 @@
 import Typography from '@mui/material/Typography';
 import Box from '@mui/system/Box';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import Image from '../../small/Image/Image';
 
 interface IProps {
   start_date: Date;
   end_date: Date;
   title: string;
-  adults: number;
   cover_url: string;
 }
 
@@ -15,7 +14,6 @@ const TripCard: React.FC<IProps> = ({
   start_date,
   end_date,
   title,
-  adults,
   cover_url,
 }) => (
   <Box

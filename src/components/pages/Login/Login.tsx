@@ -131,7 +131,7 @@ const Login = () => {
               or
             </Grid>
             <Grid container>
-              <GoogleLogin action='login' label='Login with Google' />
+              <GoogleLogin action='login' />
             </Grid>
             <Copyright />
           </Box>
