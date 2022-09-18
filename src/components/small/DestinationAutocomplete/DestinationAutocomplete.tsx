@@ -92,6 +92,7 @@ const DestinationAutocomplete = ({
       renderInput={(params) => (
         <TextField
           {...params}
+          autoComplete='off'
           fullWidth
           label='Destination'
           variant='outlined'
