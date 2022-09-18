@@ -15,6 +15,7 @@ const AddTrip = () => {
   const [flightTicketsUrls, setFlightTicketsUrls] = useState<string[]>([]);
   const [places, setPlaces] = useState<IPlace[]>([]);
   const [hotel, setHotel] = useState<IHotel | null>(null);
+  const [bookingSubUrl, setBookingSubUrl] = useState('');
 
   const { auth } = useAuth();
   const router = useRouter();
@@ -45,6 +46,7 @@ const AddTrip = () => {
       <AddTripForm
         onSubmitCallback={(id) => setSearchSessionId(id)}
         onRemoveFlightUrls={() => setFlightTicketsUrls([])}
+        onSetBookingSubUrl={(string) => setBookingSubUrl(string)}
       />
 
       {searchSessionId && (
@@ -85,6 +87,7 @@ const AddTrip = () => {
             searchSessionId={searchSessionId}
             onSelectHotel={(hotel: IHotel) => setHotel(hotel)}
             selectedHotel={hotel}
+            bookingSubUrl={bookingSubUrl}
           />
         )}
     </Layout>

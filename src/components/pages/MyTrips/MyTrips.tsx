@@ -1,5 +1,5 @@
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { IconButton, Typography } from '@mui/material';
+import { IconButton, Tooltip, Typography } from '@mui/material';
 import Box from '@mui/system/Box';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -72,13 +72,15 @@ const MyTrips: React.FC<IProps> = () => {
         </Box>
 
         <Box width='100%' justifyContent='center' display='flex'>
-          <IconButton
-            onClick={() => {
-              router.push('/add-trip');
-            }}
-          >
-            <AddCircleIcon color='secondary' fontSize='large' />
-          </IconButton>
+          <Tooltip arrow title='Add a new trip'>
+            <IconButton
+              onClick={() => {
+                router.push('/add-trip');
+              }}
+            >
+              <AddCircleIcon color='secondary' fontSize='large' />
+            </IconButton>
+          </Tooltip>
         </Box>
       </>
     </Layout>

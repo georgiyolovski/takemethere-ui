@@ -21,9 +21,11 @@ import DestinationAutocomplete, {
 const AddTripForm = ({
   onSubmitCallback: setSearchSessionId,
   onRemoveFlightUrls,
+  onSetBookingSubUrl,
 }: {
   onSubmitCallback: (id: null | number) => void;
   onRemoveFlightUrls: () => void;
+  onSetBookingSubUrl: (string: string) => void;
 }) => {
   const { auth } = useAuth();
 
@@ -64,6 +66,9 @@ const AddTripForm = ({
 
     if (json.id) {
       setSearchSessionId(json.id);
+      onSetBookingSubUrl(
+        `start_date=${dateRange.from}&end_date=${dateRange.to}&adults=${people.adults}&children=${people.children}`
+      );
     }
 
     setIsFormOpened(false);
