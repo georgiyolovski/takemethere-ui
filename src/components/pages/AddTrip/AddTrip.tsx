@@ -4,6 +4,8 @@ import { apiEndpoint } from '../../../constants';
 import { useAuth } from '../../../context/AuthContext';
 import AddTripForm from '../../big/AddTripForm/AddTripForm';
 import Flights from '../../big/Flights/Flights';
+import { IHotel } from '../../big/HotelCard/HotelCard';
+import HotelsForm from '../../big/HotelsForm/HotelsForm';
 import Layout from '../../big/Layout/Layout';
 import { IPlace } from '../../big/PlaceCard/PlaceCard';
 import PlacesForm from '../../big/PlacesForm/PlacesForm';
@@ -12,7 +14,9 @@ const AddTrip = () => {
   const [searchSessionId, setSearchSessionId] = useState<null | number>(null);
   const [flightTicketsUrls, setFlightTicketsUrls] = useState<string[]>([]);
   const [places, setPlaces] = useState<IPlace[]>([]);
+  const [hotel, setHotel] = useState<IHotel | null>(null);
 
+  console.log(hotel);
   const { auth } = useAuth();
   const router = useRouter();
 
@@ -27,7 +31,7 @@ const AddTrip = () => {
       body: JSON.stringify({
         search_session_id: searchSessionId,
         tickets: flightTicketsUrls,
-        hotels: [],
+        hotels: [hotel],
         places: places,
       }),
     })
@@ -56,8 +60,6 @@ const AddTrip = () => {
 
       {searchSessionId && flightTicketsUrls.length === 2 && (
         <PlacesForm
-          onSubmit={onSubmit}
-          isSubmitDisabled={places.length === 0}
           searchSessionId={searchSessionId}
           onSelectPlace={(newPlace: IPlace) =>
             setPlaces((prevState) => {
@@ -74,6 +76,18 @@ const AddTrip = () => {
           }
         />
       )}
+
+      {searchSessionId &&
+        flightTicketsUrls.length === 2 &&
+        places.length > 0 && (
+          <HotelsForm
+            onSubmit={onSubmit}
+            isSubmitDisabled={hotel === null}
+            searchSessionId={searchSessionId}
+            onSelectHotel={(hotel: IHotel) => setHotel(hotel)}
+            selectedHotel={hotel}
+          />
+        )}
     </Layout>
   );
 };
