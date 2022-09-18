@@ -20,8 +20,10 @@ import DestinationAutocomplete, {
 
 const AddTripForm = ({
   onSubmitCallback: setSearchSessionId,
+  onRemoveFlightUrls,
 }: {
   onSubmitCallback: (id: null | number) => void;
+  onRemoveFlightUrls: () => void;
 }) => {
   const { auth } = useAuth();
 
@@ -103,6 +105,7 @@ const AddTripForm = ({
             adults: 0,
           });
           setLocation(null);
+          onRemoveFlightUrls();
         }}
       >
         <Typography variant='h5' sx={{ color: Colors.gray2 }}>
