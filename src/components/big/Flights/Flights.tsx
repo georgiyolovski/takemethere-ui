@@ -14,9 +14,14 @@ interface IFlights {
 interface IProps {
   searchSessionId: number;
   onSaveFlightUrl: (flightUrl: string) => void;
+  onRemoveFlightUrls: () => void;
 }
 
-const Flights: React.FC<IProps> = ({ searchSessionId, onSaveFlightUrl }) => {
+const Flights: React.FC<IProps> = ({
+  searchSessionId,
+  onSaveFlightUrl,
+  onRemoveFlightUrls,
+}) => {
   const { auth } = useAuth();
 
   const [loadingFlights, setLoadingFlights] = useState(false);
@@ -61,9 +66,13 @@ const Flights: React.FC<IProps> = ({ searchSessionId, onSaveFlightUrl }) => {
           pb: 3,
           border: '1px dotted',
         }}
+        onClick={() => {
+          setSelectedFlights([]);
+          onRemoveFlightUrls();
+        }}
       >
         <Typography variant='h5' sx={{ color: Colors.gray2 }}>
-          Selected tickets:
+          Click to edit the tickets:
         </Typography>
         <Box display='flex' justifyContent='space-around' width='100%'>
           {selectedFlights.map((flight, index) => (

@@ -1,12 +1,16 @@
 import { Grid, Typography } from '@mui/material';
 import Box from '@mui/system/Box';
 import { useState } from 'react';
-import PlaceCard from '../PlaceCard/PlaceCard';
+import PlaceCard, { IPlace } from '../PlaceCard/PlaceCard';
 
-const PlacesForm = () => {
+interface IProps {
+  onSelectPlace: (place: IPlace) => void;
+}
+
+const PlacesForm: React.FC<IProps> = ({ onSelectPlace }) => {
   const [places, setPlaces] = useState([
     {
-      id: 'ChIJz9cDEQ2jpBIRyPyyZbHXCkA',
+      id: 'ChIJz9cDEQ2jpBIRyPyyZbrrrHXCkA',
       address: 'Barceloneta Beach, Spain',
       image_url:
         'https://lh3.googleusercontent.com/places/AM5lPC_R18c11eDCnK_ljRU4tJRQmMW3jK5nGoVZvtcMAPAPU95eYGnhVgibOJVq8VzMKqSldM9Leb6HSf0kt8NOyvD2En2h_spGMw=s1600-w700',
@@ -52,7 +56,11 @@ const PlacesForm = () => {
         </Grid>
       </Grid>
       {places.map((place) => (
-        <PlaceCard key={place.id} place={place} />
+        <PlaceCard
+          key={JSON.stringify(place)}
+          place={place}
+          onClick={() => onSelectPlace(place)}
+        />
       ))}
     </Box>
   );
