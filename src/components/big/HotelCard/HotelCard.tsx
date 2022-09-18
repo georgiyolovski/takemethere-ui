@@ -15,11 +15,17 @@ export interface IHotel {
 
 interface IProps {
   hotel: IHotel;
-  onClick: () => void;
-  isChecked: boolean;
+  onClick?: () => void;
+  isChecked?: boolean;
+  isDetailsPage?: boolean;
 }
 
-const HotelCard: React.FC<IProps> = ({ hotel, onClick, isChecked }) => {
+const HotelCard: React.FC<IProps> = ({
+  hotel,
+  onClick,
+  isChecked,
+  isDetailsPage,
+}) => {
   return (
     <Box
       mb={4}
@@ -28,21 +34,26 @@ const HotelCard: React.FC<IProps> = ({ hotel, onClick, isChecked }) => {
         flexDirection: { xs: 'column', md: 'row' },
         alignItems: { xs: 'center', md: 'unset' },
         width: '100%',
-        padding: '30px',
+        padding: isDetailsPage ? '0px' : '30px',
         borderRadius: 4,
         boxShadow: {
-          xs: '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
+          xs: isDetailsPage
+            ? 'none'
+            : '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
           md: 'none',
         },
         '&:hover': {
-          boxShadow:
-            '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
+          boxShadow: isDetailsPage
+            ? 'none'
+            : '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
         },
       }}
     >
-      <Box mt='auto' mb='auto' mr={{ md: 2 }}>
-        <Radio onChange={onClick} checked={isChecked} />
-      </Box>
+      {onClick && (
+        <Box mt='auto' mb='auto' mr={{ md: 2 }}>
+          <Radio onChange={onClick} checked={isChecked} />
+        </Box>
+      )}
       <Image src={hotel.picture_url} />
       <Box ml={2} mt={{ xs: 1, md: 0 }}>
         <Typography

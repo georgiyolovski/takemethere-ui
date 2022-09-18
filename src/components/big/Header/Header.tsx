@@ -16,7 +16,7 @@ const Header = (): JSX.Element => {
         <Grid container sx={{ justifyContent: 'space-between' }}>
           <Grid item sx={{ display: 'flex' }}>
             <Link
-              href='/'
+              href='/my-trips'
               sx={{
                 display: 'flex',
                 justifyContent: 'center',

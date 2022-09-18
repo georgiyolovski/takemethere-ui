@@ -13,6 +13,7 @@ interface IProps {
     to: Date;
     destination: string;
     src: string;
+    id: number;
   }[];
 }
 
@@ -57,8 +58,9 @@ const MyTrips: React.FC<IProps> = () => {
           }}
         >
           {trips && trips.length
-            ? trips.map(({ start_date, end_date, title, cover_url }) => (
+            ? trips.map(({ start_date, end_date, title, cover_url, id }) => (
                 <TripCard
+                  onClick={() => router.push(`/my-trips/${id}`)}
                   key={title}
                   start_date={start_date}
                   end_date={end_date}
