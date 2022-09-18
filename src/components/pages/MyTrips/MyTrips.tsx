@@ -28,9 +28,9 @@ const MyTrips: React.FC<IProps> = () => {
         Authorization: `${auth?.token}`,
       },
     })
-    .then((res) => res.json())
-    .then((items) => setTrips(items))
-    .catch((err) => console.log(err));
+      .then((res) => res.json())
+      .then((items) => setTrips(items))
+      .catch((err) => console.log(err));
   }, [apiEndpoint, auth?.token]);
 
   return (
@@ -49,18 +49,26 @@ const MyTrips: React.FC<IProps> = () => {
           </Box>
         )}
         <Box
-          sx={{width: '100%', display: 'flex', flexDirection: {xs: 'column', md: 'row'}, justifyContent: 'center'}}>
+          sx={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            justifyContent: 'center',
+          }}
+        >
           {trips && trips.length
-            ? trips.map(({ start_date, end_date, title, adults, cover_url }) => (
-                <TripCard
-                  key={title}
-                  start_date={start_date}
-                  end_date={end_date}
-                  title={title}
-                  adults={adults}
-                  cover_url={cover_url}
-                />
-              ))
+            ? trips.map(
+                ({ start_date, end_date, title, adults, cover_url }) => (
+                  <TripCard
+                    key={title}
+                    start_date={start_date}
+                    end_date={end_date}
+                    title={title}
+                    adults={adults}
+                    cover_url={cover_url}
+                  />
+                )
+              )
             : null}
         </Box>
 

@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import Box from '@mui/system/Box';
-import {format, parseISO} from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import Image from '../../small/Image/Image';
 
 interface IProps {
@@ -8,10 +8,16 @@ interface IProps {
   end_date: Date;
   title: string;
   adults: number;
-  cover_url: string
+  cover_url: string;
 }
 
-const TripCard: React.FC<IProps> = ({ start_date, end_date, title, adults, cover_url }) => (
+const TripCard: React.FC<IProps> = ({
+  start_date,
+  end_date,
+  title,
+  adults,
+  cover_url,
+}) => (
   <Box
     m={2}
     sx={{
@@ -21,7 +27,8 @@ const TripCard: React.FC<IProps> = ({ start_date, end_date, title, adults, cover
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
+      boxShadow:
+        '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
       '&:hover': {
         cursor: 'pointer',
         transform: 'translateY(-7px)',
@@ -30,11 +37,12 @@ const TripCard: React.FC<IProps> = ({ start_date, end_date, title, adults, cover
   >
     <Image src={cover_url} />
     <Box>
-      <Typography textAlign='center' variant='h4' sx={{marginTop: '20px'}}>
+      <Typography textAlign='center' variant='h4' sx={{ marginTop: '20px' }}>
         {title}
       </Typography>
-      <Typography textAlign='center' sx={{color: 'secondary.main'}}>
-        <strong>{format(new Date(start_date), 'dd MMM, yyyy')}</strong> to <strong>{format(new Date(end_date), 'dd MMM, yyyy')}</strong>
+      <Typography textAlign='center' sx={{ color: 'secondary.main' }}>
+        <strong>{format(new Date(start_date), 'dd MMM, yyyy')}</strong> to{' '}
+        <strong>{format(new Date(end_date), 'dd MMM, yyyy')}</strong>
       </Typography>
     </Box>
   </Box>
