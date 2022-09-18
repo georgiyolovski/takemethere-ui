@@ -1,19 +1,21 @@
+import isAfter from 'date-fns/isAfter';
 import jwt_decode from 'jwt-decode';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 export interface IAuth {
   avatarUrl: string;
   email: string;
   firstName: string;
   lastName: string;
+  exp: number;
   token: string;
 }
 
 interface IAuthContext {
   auth: IAuth | null;
   setAuth: (token: string) => void;
-  setDefaultAuth: () => void;
+  logout: () => void;
 }
 
 const DEFAULT_AUTH_STATE: IAuth = {
@@ -21,13 +23,14 @@ const DEFAULT_AUTH_STATE: IAuth = {
   email: '',
   firstName: '',
   lastName: '',
+  exp: 0,
   token: '',
 };
 
 const DEFAULT_CONTEXT: IAuthContext = {
   auth: null,
   setAuth: () => {},
-  setDefaultAuth: () => {},
+  logout: () => {},
 };
 
 const AuthStateContext = React.createContext(DEFAULT_CONTEXT);
@@ -58,6 +61,7 @@ const parseJWT = (jwt: string) => {
       email: decoded.email,
       firstName: decoded.first_name,
       lastName: decoded.last_name,
+      exp: decoded.exp,
       token: jwt,
     } as IAuth;
   } catch {
@@ -69,6 +73,34 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
   const [authState, setAuthState] = useState<IAuth>(DEFAULT_AUTH_STATE);
   const router = useRouter();
 
+  useEffect(() => {
+    // Check if the token is in the context
+    if (!authState.token) {
+      const jwtToken = window.sessionStorage.getItem('token');
+
+      // Check if the token is in sessionStorage
+      if (jwtToken) {
+        const parsed = parseJWT(jwtToken);
+        const expDate = new Date(parsed.exp * 1000);
+
+        // Check if the token has expired
+        if (isAfter(new Date(), expDate)) {
+          window.sessionStorage.removeItem('token');
+          window.sessionStorage.removeItem('firstName');
+          window.sessionStorage.removeItem('avatar');
+          router.push('/login');
+        } else {
+          setAuthState(parsed);
+        }
+      } else {
+        window.sessionStorage.removeItem('token');
+        window.sessionStorage.removeItem('firstName');
+        window.sessionStorage.removeItem('avatar');
+        router.push('/login');
+      }
+    }
+  }, [authState.token, router]);
+
   return (
     <AuthStateContext.Provider
       value={{
@@ -76,15 +108,15 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
         setAuth: (token: string) => {
           const parsed = parseJWT(token);
           setAuthState(parsed);
-          sessionStorage.setItem('token', parsed.token);
-          sessionStorage.setItem('firstName', parsed.firstName);
-          sessionStorage.setItem('avatar', parsed.avatarUrl);
+          window.sessionStorage.setItem('token', parsed.token);
+          window.sessionStorage.setItem('firstName', parsed.firstName);
+          window.sessionStorage.setItem('avatar', parsed.avatarUrl);
         },
-        setDefaultAuth: () => {
+        logout: () => {
           setAuthState(DEFAULT_AUTH_STATE);
-          sessionStorage.removeItem('token');
-          sessionStorage.removeItem('firstName');
-          sessionStorage.removeItem('avatar');
+          window.sessionStorage.removeItem('token');
+          window.sessionStorage.removeItem('firstName');
+          window.sessionStorage.removeItem('avatar');
 
           router.push('/login');
         },

@@ -5,7 +5,7 @@ import Dropdown from '../../small/Dropdown/Dropdown';
 import Image from '../../small/Image/Image';
 
 const Header = (): JSX.Element => {
-  const { auth, setDefaultAuth } = useAuth();
+  const { auth, logout } = useAuth();
 
   return (
     <AppBar
@@ -38,7 +38,7 @@ const Header = (): JSX.Element => {
               avatarSrc={auth?.avatarUrl}
               buttonLabel={`Hi, ${auth?.firstName}` || 'Hi, unknown'}
             >
-              <Button onClick={setDefaultAuth} variant='text'>
+              <Button onClick={logout} variant='text'>
                 Logout
               </Button>
             </Dropdown>
