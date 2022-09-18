@@ -1,44 +1,64 @@
-import { Grid, Typography } from '@mui/material';
+import { Button, CircularProgress, Grid, Typography } from '@mui/material';
 import Box from '@mui/system/Box';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { apiEndpoint } from '../../../constants';
+import { useAuth } from '../../../context/AuthContext';
 import PlaceCard, { IPlace } from '../PlaceCard/PlaceCard';
 
 interface IProps {
   onSelectPlace: (place: IPlace) => void;
+  searchSessionId: number;
+  isSubmitDisabled: boolean;
+  onSubmit: () => void;
 }
 
-const PlacesForm: React.FC<IProps> = ({ onSelectPlace }) => {
-  const [places, setPlaces] = useState([
-    {
-      id: 'ChIJz9cDEQ2jpBIRyPyyZbrrrHXCkA',
-      address: 'Barceloneta Beach, Spain',
-      image_url:
-        'https://lh3.googleusercontent.com/places/AM5lPC_R18c11eDCnK_ljRU4tJRQmMW3jK5nGoVZvtcMAPAPU95eYGnhVgibOJVq8VzMKqSldM9Leb6HSf0kt8NOyvD2En2h_spGMw=s1600-w700',
-      location: {
-        lat: 41.3783713,
-        lng: 2.1924685,
-      },
-      name: 'Barceloneta Beach',
-      rating: 4.3,
-      tags: ['natural_feature', 'establishment'],
+const PlacesForm: React.FC<IProps> = ({
+  onSelectPlace,
+  onSubmit,
+  searchSessionId,
+  isSubmitDisabled,
+}) => {
+  const [places, setPlaces] = useState<IPlace[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const { auth } = useAuth();
+
+  const getPlaces = useCallback(
+    (id: number) => {
+      setLoading(true);
+
+      fetch(`${apiEndpoint}/search_sessions/${id}/places`, {
+        headers: {
+          Authorization: `${auth?.token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((res: IPlace[]) => setPlaces(res))
+        .catch(() => setError(true))
+        .finally(() => setLoading(false));
     },
-    {
-      id: 'ChIJz9cDEQ2jpBIRyPyyZbHXCkA',
-      address: 'Pl. de Catalunya, 1, 4, 08002 Barcelona, Spain',
-      image_url:
-        'https://lh3.googleusercontent.com/places/AM5lPC_rza_XebgjA5T3hbkK6dunULHq8D6FcausyvvL56bHyuWsxcYjhfbzyvGdtVWrwvrlT8hGHJ_DAFNk8OzvJj5JsrXnqyOf2g=s1600-w700',
-      location: {
-        lat: 41.3858752,
-        lng: 2.1691163,
-      },
-      name: 'Centre Comercial El Triangle',
-      rating: 4,
-      tags: ['shopping_mall', 'point_of_interest', 'store', 'establishment'],
-    },
-  ]);
+    [auth?.token]
+  );
+
+  useEffect(() => {
+    if (searchSessionId) {
+      getPlaces(searchSessionId);
+    }
+  }, [getPlaces, searchSessionId]);
 
   return (
     <Box mt={3}>
+      {loading && (
+        <Box display='flex' justifyContent='center'>
+          <CircularProgress />
+        </Box>
+      )}
+      {error && (
+        <Typography variant='h4' color='error' textAlign='center'>
+          Please try another search!
+        </Typography>
+      )}
       <Grid container spacing={2} mt={4} mb={2}>
         <Grid item xs={12}>
           <Box
@@ -51,17 +71,26 @@ const PlacesForm: React.FC<IProps> = ({ onSelectPlace }) => {
             <Typography variant='h4' sx={{ mr: 0.5 }}>
               Attractions
             </Typography>
-            <Typography variant='body2'>(select options)</Typography>
+            <Typography variant='body2'>(select at least 1)</Typography>
           </Box>
         </Grid>
       </Grid>
-      {places.map((place) => (
-        <PlaceCard
-          key={JSON.stringify(place)}
-          place={place}
-          onClick={() => onSelectPlace(place)}
-        />
-      ))}
+      {places &&
+        places.map((place) => (
+          <PlaceCard
+            key={JSON.stringify(place)}
+            place={place}
+            onClick={() => onSelectPlace(place)}
+          />
+        ))}
+      <Button
+        variant='contained'
+        fullWidth
+        disabled={isSubmitDisabled}
+        onClick={onSubmit}
+      >
+        Save My Trip
+      </Button>
     </Box>
   );
 };

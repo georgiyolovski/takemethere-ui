@@ -24,13 +24,14 @@ const Flights: React.FC<IProps> = ({
 }) => {
   const { auth } = useAuth();
 
-  const [loadingFlights, setLoadingFlights] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [flights, setFlights] = useState<null | IFlights>(null);
   const [selectedFlights, setSelectedFlights] = useState<IFlight[]>([]);
+  const [error, setError] = useState(false);
 
   const getFlights = useCallback(
     (id: number) => {
-      setLoadingFlights(true);
+      setLoading(true);
 
       fetch(`${apiEndpoint}/search_sessions/${id}/flights`, {
         headers: {
@@ -39,8 +40,8 @@ const Flights: React.FC<IProps> = ({
       })
         .then((res) => res.json())
         .then((res: IFlights) => setFlights(res))
-        .catch((err) => console.log(err))
-        .finally(() => setLoadingFlights(false));
+        .catch(() => setError(true))
+        .finally(() => setLoading(false));
     },
     [auth?.token]
   );
@@ -110,10 +111,15 @@ const Flights: React.FC<IProps> = ({
   return (
     <>
       <Box mt={3}>
-        {loadingFlights && (
+        {loading && (
           <Box display='flex' justifyContent='center'>
             <CircularProgress />
           </Box>
+        )}
+        {error && (
+          <Typography variant='h4' color='error' textAlign='center'>
+            Please try another search!
+          </Typography>
         )}
         {flights && (
           <Box width='100%'>
@@ -136,6 +142,11 @@ const Flights: React.FC<IProps> = ({
                   </Grid>
                 </Grid>
                 <Box sx={{ width: '100%' }}>
+                  {flights.outgoing.length === 0 ? (
+                    <Typography variant='h5' color='error' textAlign='center'>
+                      No outgoing flights found!
+                    </Typography>
+                  ) : null}
                   {flights.outgoing.map((flight) => (
                     <FlightCard
                       key={JSON.stringify(flight)}
@@ -172,6 +183,11 @@ const Flights: React.FC<IProps> = ({
                   </Grid>
                 </Grid>
                 <Box sx={{ width: '100%' }}>
+                  {flights.return.length === 0 ? (
+                    <Typography variant='h5' color='error' textAlign='center'>
+                      No return flights found!
+                    </Typography>
+                  ) : null}
                   {flights.return.map((flight) => (
                     <FlightCard
                       key={JSON.stringify(flight)}

@@ -1,4 +1,7 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { apiEndpoint } from '../../../constants';
+import { useAuth } from '../../../context/AuthContext';
 import AddTripForm from '../../big/AddTripForm/AddTripForm';
 import Flights from '../../big/Flights/Flights';
 import Layout from '../../big/Layout/Layout';
@@ -10,7 +13,29 @@ const AddTrip = () => {
   const [flightTicketsUrls, setFlightTicketsUrls] = useState<string[]>([]);
   const [places, setPlaces] = useState<IPlace[]>([]);
 
-  console.log(places);
+  const { auth } = useAuth();
+  const router = useRouter();
+
+  const onSubmit = () => {
+    fetch(`${apiEndpoint}/trips`, {
+      method: 'POST',
+      headers: {
+        Authorization: `${auth?.token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        search_session_id: searchSessionId,
+        tickets: flightTicketsUrls,
+        hotels: [],
+        places: places,
+      }),
+    })
+      .then(() => {
+        router.push('/my-trips');
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Layout title='Add a Trip'>
@@ -29,21 +54,26 @@ const AddTrip = () => {
         />
       )}
 
-      <PlacesForm
-        onSelectPlace={(newPlace: IPlace) =>
-          setPlaces((prevState) => {
-            const existingPlace = prevState.find(
-              (place) => place.id === newPlace.id
-            );
+      {searchSessionId && flightTicketsUrls.length === 2 && (
+        <PlacesForm
+          onSubmit={onSubmit}
+          isSubmitDisabled={places.length === 0}
+          searchSessionId={searchSessionId}
+          onSelectPlace={(newPlace: IPlace) =>
+            setPlaces((prevState) => {
+              const existingPlace = prevState.find(
+                (place) => place.id === newPlace.id
+              );
 
-            if (existingPlace) {
-              return prevState.filter((place) => place.id !== newPlace.id);
-            }
+              if (existingPlace) {
+                return prevState.filter((place) => place.id !== newPlace.id);
+              }
 
-            return [...prevState, newPlace];
-          })
-        }
-      />
+              return [...prevState, newPlace];
+            })
+          }
+        />
+      )}
     </Layout>
   );
 };

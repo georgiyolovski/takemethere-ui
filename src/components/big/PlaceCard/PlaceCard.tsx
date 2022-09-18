@@ -49,7 +49,7 @@ const PlaceCard: React.FC<IProps> = ({ place, onClick }) => {
       </Box>
 
       <Image src={place.image_url} />
-      <Box ml={2}>
+      <Box ml={2} mt={{ xs: 1, md: 0 }}>
         <Typography
           variant='h5'
           sx={{ textAlign: { xs: 'center', md: 'left' } }}
@@ -67,13 +67,14 @@ const PlaceCard: React.FC<IProps> = ({ place, onClick }) => {
           sx={{
             display: 'flex',
             justifyContent: { xs: 'center', md: 'unset' },
+            mb: 1,
           }}
         >
           <Rating readOnly defaultValue={place.rating} precision={0.1} />
         </Box>
         <Box
           sx={{
-            display: 'flex',
+            display: { xs: 'flex', md: 'flow-root' },
             flexDirection: { xs: 'column', md: 'row' },
             justifyContent: { xs: 'center', md: 'unset' },
           }}
@@ -84,7 +85,7 @@ const PlaceCard: React.FC<IProps> = ({ place, onClick }) => {
               label={tag.replaceAll('_', ' ')}
               sx={{
                 mr: { xs: 'auto', md: 0.5 },
-                mb: { xs: 0.5, md: 0 },
+                mb: 0.5,
                 width: 'fit-content',
                 ml: 'auto',
               }}
