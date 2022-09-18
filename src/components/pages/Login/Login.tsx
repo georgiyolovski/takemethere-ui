@@ -104,7 +104,7 @@ const Login = () => {
               autoComplete='current-password'
             />
             <FormControlLabel
-              control={<Checkbox value='remember' color='primary' />}
+              control={<Checkbox color='secondary' value='remember' />}
               label='Remember me'
             />
             <Button

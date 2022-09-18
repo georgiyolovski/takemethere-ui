@@ -277,36 +277,66 @@ const AddTripForm = ({
             >
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <FormControlLabel
-                  control={<Checkbox onChange={handleCheckboxChange} />}
+                  control={
+                    <Checkbox
+                      color='secondary'
+                      onChange={handleCheckboxChange}
+                    />
+                  }
                   label='Beach'
                   value='beach'
                 />
                 <FormControlLabel
-                  control={<Checkbox onChange={handleCheckboxChange} />}
+                  control={
+                    <Checkbox
+                      color='secondary'
+                      onChange={handleCheckboxChange}
+                    />
+                  }
                   label='Hiking'
                   value='hiking'
                 />
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <FormControlLabel
-                  control={<Checkbox onChange={handleCheckboxChange} />}
+                  control={
+                    <Checkbox
+                      color='secondary'
+                      onChange={handleCheckboxChange}
+                    />
+                  }
                   label='Museums'
                   value='museums'
                 />
                 <FormControlLabel
-                  control={<Checkbox onChange={handleCheckboxChange} />}
+                  control={
+                    <Checkbox
+                      color='secondary'
+                      onChange={handleCheckboxChange}
+                    />
+                  }
                   label='Nightlife'
                   value='nightlife'
                 />
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <FormControlLabel
-                  control={<Checkbox onChange={handleCheckboxChange} />}
+                  control={
+                    <Checkbox
+                      color='secondary'
+                      onChange={handleCheckboxChange}
+                    />
+                  }
                   label='Shopping'
                   value='shopping'
                 />
                 <FormControlLabel
-                  control={<Checkbox onChange={handleCheckboxChange} />}
+                  control={
+                    <Checkbox
+                      color='secondary'
+                      onChange={handleCheckboxChange}
+                    />
+                  }
                   label='Nature'
                   value='nature'
                 />

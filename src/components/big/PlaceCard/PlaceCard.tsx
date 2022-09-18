@@ -45,7 +45,7 @@ const PlaceCard: React.FC<IProps> = ({ place, onClick }) => {
       }}
     >
       <Box mt='auto' mb='auto' mr={{ md: 2 }}>
-        <Checkbox onChange={onClick} />
+        <Checkbox color='secondary' onChange={onClick} />
       </Box>
 
       <Image src={place.image_url} />

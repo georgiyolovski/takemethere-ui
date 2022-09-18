@@ -35,7 +35,7 @@ const MyTrips: React.FC<IProps> = () => {
 
   return (
     <Layout
-      title={`My Trips${trips && trips.length ? `(${trips.length})` : ''}`}
+      title={`My Trips${trips && trips.length ? ` (${trips.length})` : ''}`}
     >
       <>
         {(!trips || trips?.length === 0) && (
