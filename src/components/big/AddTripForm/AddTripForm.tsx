@@ -288,8 +288,8 @@ const AddTripForm = ({
                       onChange={handleCheckboxChange}
                     />
                   }
-                  label='Beach'
-                  value='beach'
+                  label='Sightseeing'
+                  value='sightseeing'
                 />
                 <FormControlLabel
                   control={
@@ -298,8 +298,8 @@ const AddTripForm = ({
                       onChange={handleCheckboxChange}
                     />
                   }
-                  label='Hiking'
-                  value='hiking'
+                  label='Beach'
+                  value='beach'
                 />
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
